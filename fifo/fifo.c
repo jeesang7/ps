@@ -31,7 +31,7 @@ int fifo_pushb(struct fifo *q, int val) {
     buf = q->buf;
 
     do {
-        pos = __LDREWX((volatile uint32_t *)&q->rear);
+        pos = __LDREXW((volatile uint32_t *)&q->rear);
 
         if ( ((pos+1) % q->n) == *(volatile typeof(q->front) *)&q->front )
             return -ENOSPC;         // no more room
@@ -54,7 +54,7 @@ int fifo_popb(struct fifo *q) {
     buf = q->buf;
 
     do {
-        pos = __LDREWX((volatile uint32_t *)&q->front);
+        pos = __LDREXW((volatile uint32_t *)&q->front);
 
         if ( pos == *(volatile typeof(q->rear) *)&q->rear )
             return -ENOENT;     // empty
