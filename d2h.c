@@ -11,3 +11,9 @@ static inline int d2h(int d)
 
 	return h;
 }
+
+static inline int h2d(int h)
+{
+#define H2D_MAXDIV	5
+	// TODO: implementation ...
+}
