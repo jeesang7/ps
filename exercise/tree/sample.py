@@ -11,6 +11,18 @@ class TreeNode:
         # print(left_depth, right_depth)
         return max(left_depth, right_depth) + 1
 
+    def preorder_traverse(self):
+        if self.left is None and self.right is None:
+            print(self.val)
+            return
+        print(self.val)
+        if self.left is not None:
+            self.left.preorder_traverse()
+            print(self.val)
+        if self.right is not None:
+            self.right.preorder_traverse()
+            print(self.val)
+
 
 def make_tree_by_elements(elements):
     def _insert_left_first(tmp_tree, data):
@@ -44,15 +56,14 @@ def make_tree_by_elements(elements):
                 que_val.append(tmp_tree.val)
         print(que_val)
 
-    root = TreeNode(elements[0])
+    tree = TreeNode(elements[0])
     for element in elements[1:]:
-        _insert_left_first(root, element)
+        _insert_left_first(tree, element)
 
-    # get a depth
-    d = root.depth()
-    print(d)
-    return root
+    return tree
 
 
 if __name__ == "__main__":
-    make_tree_by_elements([2, 10, 3, 7, 22, 102])
+    tree = make_tree_by_elements([2, 10, 3, 7, 22, 102])
+    print("depth:", tree.depth())
+    tree.preorder_traverse()
