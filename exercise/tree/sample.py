@@ -8,49 +8,51 @@ class TreeNode:
     def depth(self):
         left_depth = self.left.depth() if self.left else 0
         right_depth = self.right.depth() if self.right else 0
-        print(left_depth, right_depth)
+        # print(left_depth, right_depth)
         return max(left_depth, right_depth) + 1
 
 
-def test_depth(tree):
-    # root = TreeNode(10, TreeNode(20), TreeNode(4))
-    print(tree.depth())
+def make_tree_by_elements(elements):
+    def _insert_left_first(tmp_tree, data):
+        que = []
+        que.append(tmp_tree)
+        que_val = []
+        que_val.append(tmp_tree.val)
 
-
-def insert(temp, data):
-    que = []
-    que.append(temp)
-    while len(que):
-        temp = que[0]
-        que.pop(0)
-        if temp.left is None:
-            if data is not None:
-                temp.left = TreeNode(data)
+        while len(que):
+            tmp_tree = que[0]
+            que.pop(0)
+            que_val.pop(0)
+            if tmp_tree.left is None:
+                if data is not None:
+                    tmp_tree.left = TreeNode(data)
+                else:
+                    tmp_tree.left = TreeNode(0)
+                break
             else:
-                temp.left = TreeNode(0)
-            break
-        else:
-            que.append(temp.left)
+                que.append(tmp_tree.left)
+                que_val.append(tmp_tree.val)
 
-        if temp.right is None:
-            if data is not None:
-                temp.right = TreeNode(data)
+            if tmp_tree.right is None:
+                if data is not None:
+                    tmp_tree.right = TreeNode(data)
+                else:
+                    tmp_tree.right = TreeNode(0)
+                break
             else:
-                temp.right = TreeNode(0)
-            break
-        else:
-            que.append(temp.right)
-    print(que)
+                que.append(tmp_tree.right)
+                que_val.append(tmp_tree.val)
+        print(que_val)
 
-
-def make_tree(elements):
-    Tree = TreeNode(elements[0])
+    root = TreeNode(elements[0])
     for element in elements[1:]:
-        insert(Tree, element)
-    return Tree
+        _insert_left_first(root, element)
+
+    # get a depth
+    d = root.depth()
+    print(d)
+    return root
 
 
 if __name__ == "__main__":
-    # test_depth()
-    tree = make_tree([2, 10, 3, 7, 22, 102])
-    test_depth(tree)
+    make_tree_by_elements([2, 10, 3, 7, 22, 102])
