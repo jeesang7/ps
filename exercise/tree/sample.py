@@ -1,5 +1,5 @@
 # Definition for a binary tree node.
-class TreeNode:
+class BinaryTreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
@@ -11,20 +11,20 @@ class TreeNode:
         # print(left_depth, right_depth)
         return max(left_depth, right_depth) + 1
 
-    def preorder_traverse(self):
+    def preorder_traverse_recursive(self):
         if self.left is None and self.right is None:
             print(self.val)
             return
         print(self.val)
         if self.left is not None:
-            self.left.preorder_traverse()
+            self.left.preorder_traverse_recursive()
             print(self.val)
         if self.right is not None:
-            self.right.preorder_traverse()
+            self.right.preorder_traverse_recursive()
             print(self.val)
 
 
-def make_tree_by_elements(elements):
+def make_binarytree_by_elements(elements):
     def _insert_left_first(tmp_tree, data):
         que = []
         que.append(tmp_tree)
@@ -37,9 +37,9 @@ def make_tree_by_elements(elements):
             que_val.pop(0)
             if tmp_tree.left is None:
                 if data is not None:
-                    tmp_tree.left = TreeNode(data)
+                    tmp_tree.left = BinaryTreeNode(data)
                 else:
-                    tmp_tree.left = TreeNode(0)
+                    tmp_tree.left = BinaryTreeNode(0)
                 break
             else:
                 que.append(tmp_tree.left)
@@ -47,16 +47,16 @@ def make_tree_by_elements(elements):
 
             if tmp_tree.right is None:
                 if data is not None:
-                    tmp_tree.right = TreeNode(data)
+                    tmp_tree.right = BinaryTreeNode(data)
                 else:
-                    tmp_tree.right = TreeNode(0)
+                    tmp_tree.right = BinaryTreeNode(0)
                 break
             else:
                 que.append(tmp_tree.right)
                 que_val.append(tmp_tree.val)
         print(que_val)
 
-    tree = TreeNode(elements[0])
+    tree = BinaryTreeNode(elements[0])
     for element in elements[1:]:
         _insert_left_first(tree, element)
 
@@ -64,6 +64,7 @@ def make_tree_by_elements(elements):
 
 
 if __name__ == "__main__":
-    tree = make_tree_by_elements([2, 10, 3, 7, 22, 102])
-    print("depth:", tree.depth())
-    tree.preorder_traverse()
+    b_tree = make_binarytree_by_elements([2, 10, 3, None, 22, 102])
+    print("depth:", b_tree.depth())
+    print("preorder_traverse_recursive or bfs:")
+    b_tree.preorder_traverse_recursive()
