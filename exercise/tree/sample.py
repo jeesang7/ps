@@ -23,6 +23,20 @@ class BinaryTreeNode:
             self.right.preorder_traverse_recursive()
             print(self.val)
 
+    def bfs_traverse(self):
+        que = []
+        que.append(self)
+
+        while len(que) != 0:
+            tmp_tree = que.pop(0)
+            print(tmp_tree.val)
+
+            if tmp_tree.left:
+                que.append(tmp_tree.left)
+
+            if tmp_tree.right:
+                que.append(tmp_tree.right)
+
 
 def make_binarytree_by_elements(elements):
     def _insert_left_first(tmp_tree, data):
@@ -68,3 +82,5 @@ if __name__ == "__main__":
     print("depth:", b_tree.depth())
     print("preorder_traverse_recursive or bfs:")
     b_tree.preorder_traverse_recursive()
+    print("bfs:")
+    b_tree.bfs_traverse()
